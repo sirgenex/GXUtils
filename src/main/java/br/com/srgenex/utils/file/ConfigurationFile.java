@@ -1,5 +1,6 @@
 package br.com.srgenex.utils.file;
 
+import br.com.srgenex.utils.GXUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.configuration.ConfigurationSection;
@@ -28,8 +29,8 @@ public class ConfigurationFile implements Serializable {
     private FileConfiguration fileConfiguration;
     private YamlConfiguration defaultFile;
 
-    public ConfigurationFile(Plugin plugin, String name, File parent, String s) {
-        this.plugin = plugin;
+    public ConfigurationFile(String name, File parent, String s) {
+        this.plugin = GXUtils.getInstance();
         this.name = name+".yml";
         if(!parent.exists())
             if(!parent.mkdir()) plugin.getLogger().severe("Cannot create the "+name+" directory.");
