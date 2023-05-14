@@ -37,26 +37,26 @@ public class Formatter {
         remainingTime = remainingTime.minusMinutes(minutes);
         long seconds = remainingTime.getSeconds();
 
-        if (days > 0) s.append(days).append(" day").append(days > 1 ? "s" : "");
+        if (days > 0) s.append(days).append(" dia").append(days > 1 ? "s" : "");
 
         if (hours > 0) {
             if (days > 0 && minutes > 0 || days > 0 && seconds > 0) s.append(", ");
-            if(minutes <= 0 && seconds <= 0 && days > 0) s.append(" and ");
-            s.append(hours).append(" hour").append(hours > 1 ? "s" : "");
+            if(minutes <= 0 && seconds <= 0 && days > 0) s.append(" e ");
+            s.append(hours).append(" hora").append(hours > 1 ? "s" : "");
         }
 
         if (minutes > 0) {
             if (hours > 0 && seconds > 0) s.append(", ");
-            if(seconds <= 0 && hours > 0) s.append(" and ");
-            s.append(minutes).append(" minute").append(minutes > 1 ? "s" : "");
+            if(seconds <= 0 && hours > 0) s.append(" e ");
+            s.append(minutes).append(" minuto").append(minutes > 1 ? "s" : "");
         }
 
         if (seconds > 0) {
-            if (s.length() != 0 && minutes > 0) s.append(" and ");
-            s.append(seconds).append(" second").append(seconds > 1 ? "s" : "");
+            if (s.length() != 0 && minutes > 0) s.append(" e ");
+            s.append(seconds).append(" segundo").append(seconds > 1 ? "s" : "");
         }
 
-        return s.length() > 0 ? s.toString().trim() : "some milliseconds";
+        return s.length() > 0 ? s.toString().trim() : "alguns milisegundos";
     }
 
     public static String getRemainingTimeSmall(long time) {
@@ -71,7 +71,7 @@ public class Formatter {
         long seconds = remainingTime.getSeconds();
         long months = days/30;
         long years = months/12;
-        if(years > 0) s.append((int)years).append("Y");
+        if(years > 0) s.append((int)years).append("A");
         if(months > 0) s.append((int)months).append("M");
 
         if (days > 0) s.append(days).append("d");
