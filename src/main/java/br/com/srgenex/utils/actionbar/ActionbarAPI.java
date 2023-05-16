@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 @SuppressWarnings("unused")
 public class ActionbarAPI {
 
-    public void send(Player p, String text) {
+    public static void send(Player p, String text) {
         ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', text) + "\"}"), (byte) 2));
     }
 
-    public void broadcast(String text) {
+    public static void broadcast(String text) {
         Bukkit.getOnlinePlayers().forEach(player -> send(player, text));
     }
 
