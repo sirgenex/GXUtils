@@ -12,8 +12,7 @@ import org.bukkit.entity.Player;
 public class ActionbarAPI {
 
     public void send(Player p, String text) {
-        text = ChatColor.translateAlternateColorCodes('&', text);
-        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + text + "\"}"), (byte) 2));
+        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a("{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', text) + "\"}"), (byte) 2));
     }
 
     public void broadcast(String text) {
