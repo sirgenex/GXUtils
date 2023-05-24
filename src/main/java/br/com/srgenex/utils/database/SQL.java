@@ -28,7 +28,7 @@ public class SQL {
         this.executor = Executors.newCachedThreadPool();
     }
 
-    public SQL load(File data) throws SQLException {
+    public SQL load(File data) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection("jdbc:sqlite://" + data.getAbsolutePath() + "/database.db");
