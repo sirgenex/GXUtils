@@ -97,7 +97,7 @@ public class Icon {
             ItemBuilder item = new ItemBuilder(itemStack.get());
             ContainerHolder holder = container.getHolder();
             Inventory inventory = holder.getInventory();
-            int slot = itemBuilder.getSlot();
+            int slot = itemBuilder == null ? position : itemBuilder.getSlot();
             Icon icon = new Icon(slot, item::wrap, consumer, closeClick);
             container.put(slot, icon);
             inventory.setItem(slot, icon.getCurrent().get());
