@@ -41,9 +41,8 @@ public class ToolingHandler implements Listener {
         if (!(holder instanceof ContainerHolder)) return;
         ContainerHolder containerHolder = (ContainerHolder) holder;
         Container container = containerHolder.getContainer();
-        if(!container.isCloseable()){
-            Bukkit.getScheduler().runTaskLater(GXUtils.getInstance(), () -> container.open(p), 5L);
-        }
+        if(container.getNextContainer() != null) Bukkit.getScheduler().runTaskLater(GXUtils.getInstance(), () -> container.getNextContainer().open(p), 5L);
+        if(!container.isCloseable()) Bukkit.getScheduler().runTaskLater(GXUtils.getInstance(), () -> container.open(p), 5L);
         if(container.getCloseConsumer() != null) container.getCloseConsumer().accept(event);
     }
 

@@ -25,6 +25,7 @@ public abstract class Container {
     private Consumer<InventoryClickEvent> consumer = null;
     @Setter private Consumer<InventoryCloseEvent> closeConsumer = null;
     @Setter private boolean closeable = true;
+    @Setter private Container nextContainer;
 
     public Container(String name, Size size) {
         this.name = name;
