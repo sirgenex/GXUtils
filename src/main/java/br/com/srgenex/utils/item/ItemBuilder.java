@@ -179,6 +179,11 @@ public class ItemBuilder implements Cloneable {
         });
     }
 
+    public ItemBuilder setSlot(int slot){
+        this.slot = slot;
+        return this;
+    }
+
     public ItemBuilder setLore(String... lore) {
         return changeItemMeta(it -> it.setLore(Arrays.asList(colored(lore))));
     }
