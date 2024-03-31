@@ -97,7 +97,7 @@ public class ItemBuilder implements Cloneable {
         if(lore != null) setLore(lore);
         if(c.getString(path+".slot") != null)
             setSlot(c.getInt(path+".slot"));
-        String skullUrl = c.getString(path+".skull-url");
+        String skullUrl = c.getString(path+".skull-value");
         String skull = c.getString(path+".skull");
         if(skull != null)
             head(skull);
