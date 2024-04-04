@@ -59,7 +59,7 @@ public class Hologram {
         this.destroyCache = new ArrayList<>();
         Location displayLoc = loc.clone().add(0, (ABS * lines.size()) - 1.97D, 0);
         for (String line : lines) {
-            Object packet = this.getPacket(loc.getWorld(), displayLoc.getX(), displayLoc.getY(), displayLoc.getZ(), line);
+            Object packet = this.getPacket(loc.getWorld(), displayLoc.getX(), displayLoc.getY(), displayLoc.getZ(), line.replace("&", "§"));
             if (!line.equals("")) this.spawnCache.add(packet);
             try {
                 Field field = packetClass.getDeclaredField("a");
