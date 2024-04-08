@@ -105,9 +105,14 @@ public class ItemBuilder implements Cloneable {
             texture(skullUrl);
         if(c.getString(path+".enchantments") != null)
             c.getStringList(path+".enchantments").forEach(s -> {
-                int enchantID = Integer.parseInt(s.split(";")[0]);
+                Enchantment enchantment;
+                try{
+                    int enchantID = Integer.parseInt(s.split(";")[0]);
+                    enchantment = Enchantment.getById(enchantID);
+                }catch(Exception ignored){
+                    enchantment = Enchantment.getByName(s.split(";")[0].toUpperCase());
+                }
                 int level = Integer.parseInt(s.split(";")[1]);
-                Enchantment enchantment = Enchantment.getById(enchantID);
                 item.addUnsafeEnchantment(enchantment, level);
             });
         if(c.getString(path+".flag") != null)
