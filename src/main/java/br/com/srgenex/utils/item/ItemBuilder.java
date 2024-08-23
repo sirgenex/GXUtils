@@ -120,6 +120,10 @@ public class ItemBuilder implements Cloneable {
                 if (s.equalsIgnoreCase("all")) addFlag(ItemFlag.values());
                 else addFlag(ItemFlag.valueOf(s.toUpperCase()));
             });
+        if(c.getBoolean(path+".glow")){
+            addFlag(ItemFlag.HIDE_ENCHANTS);
+            enchant(Enchantment.PROTECTION_PROJECTILE, 1);
+        }
     }
 
     public ItemBuilder(FileConfiguration c, String path, String player, boolean a, String... replacements){
