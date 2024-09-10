@@ -30,11 +30,12 @@ public class SQL {
 
     public SQL load(File data) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            this.connection = DriverManager.getConnection("jdbc:sqlite://" + data.getAbsolutePath() + "/database.db");
+            Class.forName("org.sqlite.JDBC");
+            File dbFile = new File(data, "database.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getPath());
         } catch (Exception e) {
             e.printStackTrace();
-            GXUtils.getInstance().getLogger().severe("No MySQL driver found.");
+            GXUtils.getInstance().getLogger().severe("Failed to load the SQLite database.");
         }
         return this;
     }
