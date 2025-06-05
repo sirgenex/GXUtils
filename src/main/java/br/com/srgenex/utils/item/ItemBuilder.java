@@ -174,7 +174,28 @@ public class ItemBuilder implements Cloneable {
         return changeItemMeta(it -> it.setDisplayName(colored(finalName)));
     }
 
+    public ItemBuilder name(String name, List<String> replacements) {
+        if (name == null) System.out.println("Tried to update a name that is null");
+        for (String replacement : replacements) {
+            try {
+                String previous = replacement.split(", ")[0];
+                String next = replacement.split(", ")[1];
+                assert name != null;
+                name = name.replace(previous, next.replace("null", ""));
+            } catch (Exception ignored) {
+            }
+        }
+        String finalName = name;
+        return changeItemMeta(it -> it.setDisplayName(colored(finalName)));
+    }
+
     public ItemBuilder name(List<String> name, String... replacements){
+        AtomicReference<String> s = new AtomicReference<>();
+        name.forEach(s::set);
+        return name(s.get(), replacements);
+    }
+
+    public ItemBuilder name(List<String> name, List<String> replacements){
         AtomicReference<String> s = new AtomicReference<>();
         name.forEach(s::set);
         return name(s.get(), replacements);
@@ -205,7 +226,31 @@ public class ItemBuilder implements Cloneable {
         return changeItemMeta(it -> it.setLore(null)).addLore(lore, replacements);
     }
 
+    public ItemBuilder setLore(List<String> lore, List<String> replacements) {
+        return changeItemMeta(it -> it.setLore(null)).addLore(lore, replacements);
+    }
+
     public ItemBuilder addLore(List<String> lore, String... replacements) {
+        if (lore == null || lore.isEmpty()) return this;
+        List<String> list = new ArrayList<>();
+        lore.forEach(line -> {
+            for (String replacement : replacements) {
+                try {
+                    String previous = replacement.split(", ")[0];
+                    String next = replacement.split(", ")[1];
+                    line = line.replace(previous, next.replace("null", ""));
+                }catch(Exception ignored){}
+            }
+            list.add(line);
+        });
+        return changeItemMeta(meta -> {
+            List<String> originalLore = meta.getLore() == null ? Lists.newArrayList() : meta.getLore();
+            originalLore.addAll(list);
+            meta.setLore(colored(originalLore));
+        });
+    }
+
+    public ItemBuilder addLore(List<String> lore, List<String> replacements) {
         if (lore == null || lore.isEmpty()) return this;
         List<String> list = new ArrayList<>();
         lore.forEach(line -> {
@@ -289,6 +334,19 @@ public class ItemBuilder implements Cloneable {
             if (name != null) name(name, replacement);
             List<String> lore = getItem().getItemMeta().getLore();
             if (lore != null) setLore(lore, replacement);
+        }
+        ItemStack item = this.item.clone();
+        this.item = real;
+        return item;
+    }
+
+    public ItemStack wrap(List<String> replacements) {
+        ItemStack real = this.item.clone();
+        if(getItem().hasItemMeta()) {
+            String name = getItem().getItemMeta().getDisplayName();
+            if (name != null) name(name, replacements);
+            List<String> lore = getItem().getItemMeta().getLore();
+            if (lore != null) setLore(lore, replacements);
         }
         ItemStack item = this.item.clone();
         this.item = real;

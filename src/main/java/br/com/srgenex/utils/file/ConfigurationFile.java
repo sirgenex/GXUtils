@@ -33,7 +33,7 @@ public class ConfigurationFile implements Serializable {
         this.plugin = GXUtils.getInstance();
         this.name = name+".yml";
         if(!parent.exists())
-            if(!parent.mkdir()) plugin.getLogger().severe("Cannot create the "+name+" directory.");
+            if(!parent.mkdirs()) plugin.getLogger().severe("Cannot create the "+name+" directory.");
         this.parent = parent;
         file = new File(parent, this.name);
         if(plugin.getResource(s) != null && !file.exists())
