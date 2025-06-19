@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class ItemBuilder implements Cloneable {
     public ItemStack item;
     public int slot;
+    public List<Integer> slots;
 
     public ItemBuilder(ItemStack item) {
         this.item = item.clone();
@@ -97,6 +98,8 @@ public class ItemBuilder implements Cloneable {
         if(lore != null) setLore(lore);
         if(c.getString(path+".slot") != null)
             setSlot(c.getInt(path+".slot"));
+        if(c.getString(path+".slots") != null)
+            setSlots(c.getIntegerList(path+".slots"));
         String skullUrl = c.getString(path+".skull-value");
         String skull = c.getString(path+".skull");
         if(skull != null)

@@ -9,6 +9,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -50,7 +52,7 @@ public class Icon {
 
     public static class Builder {
 
-        private int position;
+        private List<Integer> position;
         private BiConsumer<Icon, InventoryClickEvent> consumer;
         private Supplier<ItemStack> itemStack;
         private ItemBuilder itemBuilder;
@@ -58,21 +60,38 @@ public class Icon {
 
         public Builder(ItemBuilder item) {
             this.itemStack = item::wrap;
-            this.position = item.getSlot();
+            if(item.getSlots() != null && item.getSlots().isEmpty()) {
+                this.position = Collections.singletonList(item.getSlot());
+            }else{
+                this.position = item.getSlots();
+            }
             this.itemBuilder = item;
         }
 
         public Builder(ItemBuilder item, String... replacements) {
             this.itemStack = () -> item.wrap(replacements);
-            this.position = item.getSlot();
+            if(item.getSlots() != null && item.getSlots().isEmpty()) {
+                this.position = Collections.singletonList(item.getSlot());
+            }else{
+                this.position = item.getSlots();
+            }
             this.itemBuilder = item;
         }
 
         public Builder(int position) {
+            this.position = Collections.singletonList(position);
+        }
+
+        public Builder(List<Integer> position) {
             this.position = position;
         }
 
         public Builder position(int position) {
+            this.position = Collections.singletonList(position);
+            return this;
+        }
+
+        public Builder position(List<Integer> position) {
             this.position = position;
             return this;
         }
@@ -93,14 +112,15 @@ public class Icon {
         }
 
         public void build(Container container) {
-            if (position == -1) return;
+            if (position.isEmpty()) return;
             ItemBuilder item = new ItemBuilder(itemStack.get());
             ContainerHolder holder = container.getHolder();
             Inventory inventory = holder.getInventory();
-            int slot = itemBuilder == null ? position : itemBuilder.getSlot();
-            Icon icon = new Icon(slot, item::wrap, consumer, closeClick);
-            container.put(slot, icon);
-            inventory.setItem(slot, icon.getCurrent().get());
+            position.forEach(slot -> {
+                Icon icon = new Icon(slot, item::wrap, consumer, closeClick);
+                container.put(slot, icon);
+                inventory.setItem(slot, icon.getCurrent().get());
+            });
         }
 
     }
