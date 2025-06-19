@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public class ItemBuilder implements Cloneable {
     public ItemStack item;
     public int slot;
-    public List<Integer> slots;
+    public List<Integer> slots = new ArrayList<>();
 
     public ItemBuilder(ItemStack item) {
         this.item = item.clone();

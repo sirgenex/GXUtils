@@ -60,7 +60,7 @@ public class Icon {
 
         public Builder(ItemBuilder item) {
             this.itemStack = item::wrap;
-            if(item.getSlots() != null && item.getSlots().isEmpty()) {
+            if(item.getSlots().isEmpty()) {
                 this.position = Collections.singletonList(item.getSlot());
             }else{
                 this.position = item.getSlots();
@@ -70,7 +70,7 @@ public class Icon {
 
         public Builder(ItemBuilder item, String... replacements) {
             this.itemStack = () -> item.wrap(replacements);
-            if(item.getSlots() != null && item.getSlots().isEmpty()) {
+            if(item.getSlots().isEmpty()) {
                 this.position = Collections.singletonList(item.getSlot());
             }else{
                 this.position = item.getSlots();
