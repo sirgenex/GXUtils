@@ -127,6 +127,10 @@ public class ItemBuilder implements Cloneable {
             addFlag(ItemFlag.HIDE_ENCHANTS);
             enchant(Enchantment.PROTECTION_PROJECTILE, 1);
         }
+
+        String head = c.getString(path+".head");
+        if(head != null)
+            head(head.replace("{player}", Arrays.stream(replacements).filter(s -> s.contains("{player}, ")).findAny().orElse("{player}, SrGeneX").split(", ")[1]));
     }
 
     public ItemBuilder(FileConfiguration c, String path, String player, boolean a, String... replacements){
