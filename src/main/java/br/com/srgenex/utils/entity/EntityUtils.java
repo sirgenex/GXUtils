@@ -1,5 +1,6 @@
 package br.com.srgenex.utils.entity;
 
+import lombok.Getter;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.bukkit.Bukkit;
@@ -8,7 +9,10 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
+import java.util.UUID;
 
 public class EntityUtils {
 
@@ -50,6 +54,13 @@ public class EntityUtils {
         nmsEnt.c(tag);
         tag.setInt("NoAI", 1);
         nmsEnt.f(tag);
+    }
+
+    @Getter
+    public static ArrayList<UUID> invulnerable = new ArrayList<>();
+
+    public static void setInvulnerable(Entity entity) {
+        invulnerable.add(entity.getUniqueId());
     }
 
 }
