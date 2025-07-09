@@ -1,8 +1,10 @@
 package br.com.srgenex.utils.entity;
 
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.PathfinderGoalSelector;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 
 import java.lang.reflect.Field;
@@ -35,6 +37,19 @@ public class EntityUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void disableAI(Entity entity) {
+        net.minecraft.server.v1_8_R3.Entity nmsEnt = ((CraftEntity) entity).getHandle();
+        NBTTagCompound tag = nmsEnt.getNBTTag();
+
+        if(tag == null) {
+            tag = new NBTTagCompound();
+        }
+
+        nmsEnt.c(tag);
+        tag.setInt("NoAI", 1);
+        nmsEnt.f(tag);
     }
 
 }
